@@ -40,5 +40,12 @@
     "scripts": {
         "test": "phpunit",
         "cs": "phpcs --standard=psr2 src/"
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "Loren138\\CASServer\\CASServerServiceProvider"
+            ]
+        }
     }
 }
