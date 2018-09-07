@@ -3,6 +3,7 @@
 ## Todo
 - Add SAML/Warn
 - Unit test flashing an error to session
+- implement proxy validation
 
 This is a Laravel implementation of the CAS protocol because tomcat/CAS are way to
 hard to deal with and keep up to date.  This should be much easier and much easier
