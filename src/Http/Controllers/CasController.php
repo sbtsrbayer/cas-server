@@ -17,8 +17,11 @@ class CasController extends Controller
         if (config('casserver.disableNonSSL', false) && !$request->secure()) {
             throw new \Exception('Request not SSL.');
         }
+
         if (!session()->isStarted()) {
-            throw new \Exception('Sessions are required for CAS Server.  Please re-enable the session middleware.');
+        // I think session are no longer accessible from the contructor of a controller
+        // I could look at doing this in a differen way via a new middleware that just checks on it??
+      //      throw new \Exception('Sessions are required for CAS Server.  Please re-enable the session middleware.');
         }
     }
 
@@ -74,6 +77,7 @@ class CasController extends Controller
         CASTicket $CASTicket,
         $renew
     ) {
+
         if ($request->has('service')) {
             $ser = $request->input('service');
             if (!$service->validate($ser)) {
@@ -102,6 +106,11 @@ class CasController extends Controller
         }
     }
 
+    public function getProxyValidate(Request $request, CASTicket $CASTicket)
+    {
+        return $this->getServiceValidate3($request, $CASTicket, true);
+    }
+
     /**
      * This is a CAS 1.0 Request
      *
@@ -124,7 +133,7 @@ class CasController extends Controller
         $ticket = $request->input('ticket');
         $renew = filter_var($request->input('renew', false), FILTER_VALIDATE_BOOLEAN);
         try {
-            return $CASTicket->validate($ticket, $request->input('service'), $renew);
+            return  $CASTicket->validate($ticket, $request->input('service'), $renew);
         } catch (\Exception $e) {
             return 'INTERNAL_ERROR';
         }
@@ -163,7 +172,6 @@ class CasController extends Controller
                 ]
             ];
         }
-
         if (strtolower($request->input('format', 'XML')) === 'json') {
             return $response;
         }
@@ -177,16 +185,6 @@ class CasController extends Controller
     public function getServiceValidate(Request $request, CASTicket $CASTicket)
     {
         return $this->getServiceValidate3($request, $CASTicket, false);
-    }
-
-    public function getProxyValidate(Request $request, CASTicket $CASTicket)
-    {
-        return $this->getServiceValidate3($request, $CASTicket, false);
-    }
-
-    public function getProxyValidate3(Request $request, CASTicket $CASTicket)
-    {
-        return $this->getServiceValidate3($request, $CASTicket, true);
     }
 
     public function getLogout(Request $request, Service $service, CASAuthentication $CASAuthentication)

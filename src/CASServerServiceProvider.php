@@ -59,11 +59,9 @@ class CASServerServiceProvider extends ServiceProvider
             __DIR__.'/../config/casserver.php',
             'casserver'
         );
-        $this->app['command.cas-server.cleanup'] = $this->app->share(
-            function () {
-                return new Cleanup();
-            }
-        );
+        $this->app->singleton('command.cas-server.cleanup', function () {
+            return new Cleanup();
+        });
         $this->commands('command.cas-server.cleanup');
     }
 }

@@ -27,4 +27,4 @@ Route::get('/serviceValidate', '\Loren138\CASServer\Http\Controllers\CasControll
 Route::get('/proxyValidate', '\Loren138\CASServer\Http\Controllers\CasController@getProxyValidate');
 // CAS 3.0 Validate
 Route::get('/p3/serviceValidate', '\Loren138\CASServer\Http\Controllers\CasController@getServiceValidate3');
-Route::get('/p3/proxyValidate', '\Loren138\CASServer\Http\Controllers\CasController@getProxyValidate3');
+Route::get('/p3/proxyValidate', '\Loren138\CASServer\Http\Controllers\CasController@getProxyValidate');

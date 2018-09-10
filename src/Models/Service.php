@@ -13,11 +13,7 @@ class Service
 
     public function validate($service)
     {
-        return $this->services->first(function ($key, $value) use ($service) {
-            if (is_array($key)) {
-                // Laravel 5.3 switches the arguments...
-                $value = $key;
-            }
+        return $this->services->first(function ($value, $key) use ($service) {
             return preg_match('#'.$value['urlRegex'].'#', $service);
         }, false);
     }
