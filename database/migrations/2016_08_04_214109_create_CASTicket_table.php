@@ -15,7 +15,7 @@ class CreateCASTicketTable extends Migration
         Schema::create('CASTicket', function (Blueprint $table) {
             $table->string('id', 32);
             $table->primary('id');
-            $table->bigInteger('authenticationId');
+            $table->bigInteger('authenticationId')->unsigned();
             $table->string('service');
             $table->boolean('renew');
             $table->boolean('used');
