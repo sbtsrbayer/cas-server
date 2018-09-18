@@ -11,7 +11,7 @@ use Illuminate\Http\Request;
 
 class CasControllerTest extends TestCase
 {
-    use DatabaseMigrations;
+    use \Illuminate\Foundation\Testing\DatabaseMigrations;
 
     public $testUser;
     public $testPassword;
@@ -637,10 +637,15 @@ class CasControllerTest extends TestCase
 
     public function testUnitGetLogin5()
     {
+//        session()->remove();
+        \Session::flush();
+        session_unset();
+            echo "555555\N\n\n\n\n";
         $this->expectException(\Exception::class);
         $this->expectExceptionMessageRegExp("/session/");
         config(['casserver.disableNonSSL' => true]);
         $request = new Request();
+        $request->server->set('HTTPS', 'on');
         $request->server->set('HTTPS', 'on');
         $cas = new CasController($request);
         $service = new Service();

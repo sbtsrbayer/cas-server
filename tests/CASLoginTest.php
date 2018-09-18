@@ -7,7 +7,7 @@ use Carbon\Carbon;
 
 class CASLoginTest extends TestCase
 {
-    use DatabaseMigrations;
+    use \Illuminate\Foundation\Testing\DatabaseMigrations;
 
     public function testConfig()
     {

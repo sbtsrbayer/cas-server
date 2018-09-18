@@ -8,7 +8,7 @@ use Carbon\Carbon;
 
 class CASAuthenticationTest extends TestCase
 {
-    use DatabaseMigrations;
+    use \Illuminate\Foundation\Testing\DatabaseMigrations;
 
     public function testNotLoggedIn()
     {
@@ -19,7 +19,7 @@ class CASAuthenticationTest extends TestCase
     public function testNotLoggedIn2()
     {
         $auth = new CASAuthentication();
-        \Session::set('casserver.authenticationId', 2);
+        session(['casserver.authenticationId' =>  2]);
         $this->assertSame($auth->loggedIn(), false);
     }
 
@@ -34,7 +34,7 @@ class CASAuthenticationTest extends TestCase
         $auth->lastUsed = new \DateTime();
         $auth->sso = 1;
         $auth->save();
-        \Session::set('casserver.authenticationId', $auth->id);
+        session(['casserver.authenticationId' => $auth->id]);
 
         $this->assertSame($auth->loggedIn()->username, $user);
     }
@@ -50,11 +50,11 @@ class CASAuthenticationTest extends TestCase
         $auth->lastUsed = new \DateTime();
         $auth->sso = 0;
         $auth->save();
-        \Session::set('casserver.authenticationId', $auth->id);
+        session(['casserver.authenticationId' => $auth->id]);
 
         $this->assertSame($auth->loggedIn(), false);
     }
-    
+
     public function testLogout()
     {
         session(['casserver.authenticationId' => 1]);
@@ -74,11 +74,11 @@ class CASAuthenticationTest extends TestCase
         $auth->lastUsed = new \DateTime();
         $auth->sso = 1;
         $auth->save();
-        \Session::set('casserver.authenticationId', $auth->id);
+        session(['casserver.authenticationId' => $auth->id]);
 
         $auth = new CASAuthentication();
         $auth->logout();
-        $this->assertSame(\Session::get('casserver.authenticationId'), false);
+        $this->assertSame(session('casserver.authenticationId'),  false);
         $this->dontSeeInDatabase('CASAuthentication', ['id' => $auth->id]);
     }
 
@@ -101,7 +101,7 @@ class CASAuthenticationTest extends TestCase
         $ticket->renew = 0;
         $ticket->createdAt = new \DateTime();
         $ticket->save();
-        \Session::set('casserver.authenticationId', $auth->id);
+        session(['casserver.authenticationId' => $auth->id]);
 
         $auth = new CASAuthentication();
         $auth->logout();
@@ -122,7 +122,7 @@ class CASAuthenticationTest extends TestCase
         $auth->lastUsed = new \DateTime();
         $auth->sso = 1;
         $auth->save();
-        \Session::set('casserver.authenticationId', $auth->id);
+        session(['casserver.authenticationId' => $auth->id]);
 
         $this->assertSame($auth->loggedIn(), false);
     }
@@ -139,7 +139,7 @@ class CASAuthenticationTest extends TestCase
         $auth->lastUsed = $lastUsed;
         $auth->sso = 1;
         $auth->save();
-        \Session::set('casserver.authenticationId', $auth->id);
+        session(['casserver.authenticationId' => $auth->id]);
 
         $this->assertSame($auth->loggedIn(), false);
     }

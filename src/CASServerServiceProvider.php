@@ -31,18 +31,25 @@ class CASServerServiceProvider extends ServiceProvider
         $this->loadViewsFrom(__DIR__.'/../resources/views', 'casserver');
         $this->loadViewsFrom(__DIR__.'/../resources/xml', 'casserverxml');
 
+        $router = $this->app['router'];
+        $router->pushMiddlewareToGroup('web', Loren138\CASServer\Http\Middleware\CheckSessionMiddleware::class);
+
         $this->publishes([
             __DIR__.'/../config/casserver.php' => config_path('casserver.php')
         ], 'config');
 
+         $this->loadMigrationsFrom(__DIR__.'/../database/migrations');
+        /* above lines makes the the next part obsolete
         $this->publishes([
             __DIR__.'/../database/migrations/' => database_path('migrations')
         ], 'migrations');
-
+         */
         $this->publishes([
             __DIR__.'/../public/vendor/casserver' => public_path('vendor/casserver'),
         ], 'public');
 
+        //below line might make below lines obsolete
+        //$this->loadViewsFrom(__DIR__.'/../resources/views', 'cas-server');
         $this->publishes([
             __DIR__.'/../resources/views' => base_path('resources/views/vendor/casserver'),
         ], 'views');

@@ -8,7 +8,7 @@ use Carbon\Carbon;
 
 class CleanupCommandTest extends TestCase
 {
-    use DatabaseMigrations;
+    use \Illuminate\Foundation\Testing\DatabaseMigrations;
 
     public function testCommand()
     {

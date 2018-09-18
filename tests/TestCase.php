@@ -4,7 +4,7 @@ namespace Loren138\CASServerTests;
 
 use Carbon\Carbon;
 
-class TestCase extends \Orchestra\Testbench\TestCase
+class TestCase extends \Orchestra\Testbench\BrowserKit\TestCase
 {
     /**
      * The base URL to use while testing the application.
@@ -20,12 +20,7 @@ class TestCase extends \Orchestra\Testbench\TestCase
 
     public function setUp()
     {
-        $uses = array_flip(class_uses_recursive(static::class));
-
         parent::setUp();
-        if (isset($uses[DatabaseMigrations::class])) {
-            $this->runDatabaseMigrations();
-        }
     }
 
     protected function getPackageAliases($app)
@@ -50,14 +45,6 @@ class TestCase extends \Orchestra\Testbench\TestCase
     protected function getEnvironmentSetUp($app)
     {
         parent::getEnvironmentSetUp($app);
-        $app->make('Illuminate\Contracts\Http\Kernel')->pushMiddleware('Illuminate\Session\Middleware\StartSession');
-        // Setup default database to use sqlite :memory:
-        $app['config']->set('database.default', 'test');
-        $app['config']->set('database.connections.test', [
-            'driver'   => 'sqlite',
-            'database' => ':memory:',
-            'prefix'   => '',
-        ]);
     }
 
 
