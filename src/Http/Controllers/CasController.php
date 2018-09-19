@@ -18,12 +18,6 @@ class CasController extends Controller
         if (config('casserver.disableNonSSL', false) && !$request->secure()) {
             throw new \Exception('Request not SSL.');
         }
-
-        if (!session()->isStarted()) {
-        // I think sessions are no longer accessible from the contructor of a controller
-        // I could look at doing this in a differen way via a new middleware that just checks on it??
-      //      throw new \Exception('Sessions are required for CAS Server.  Please re-enable the session middleware.');
-        }
     }
 
     public function getIndex()
