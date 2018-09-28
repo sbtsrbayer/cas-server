@@ -32,7 +32,7 @@ class CASServerServiceProvider extends ServiceProvider
         $this->loadViewsFrom(__DIR__.'/../resources/xml', 'casserverxml');
 
         $router = $this->app['router'];
-        $router->pushMiddlewareToGroup('web', Loren138\CASServer\Http\Middleware\CheckSessionMiddleware::class);
+        $router->pushMiddlewareToGroup('web', \Loren138\CASServer\Http\Middleware\CheckSessionMiddleware::class);
 
         $this->publishes([
             __DIR__.'/../config/casserver.php' => config_path('casserver.php')
