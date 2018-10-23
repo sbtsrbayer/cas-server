@@ -13,7 +13,7 @@ Because of the required URLs for CAS, it is recommended that you install this
 in it's own Laravel instance.
 
 Laravel installation instructions can be found here:
-https://laravel.com/docs/5.2/installation
+https://laravel.com/docs/5.6/installation
 
 ## Install
 
@@ -64,7 +64,7 @@ You can do that by adding the following in the schedule function in your
     $schedule->command('casserver:cleanup')->daily();
     
 Note: For this to work, you must have setup a cron job to call Laravel's command:
-https://laravel.com/docs/5.2/scheduling#introduction
+https://laravel.com/docs/5.6/scheduling#introduction
 
 ## Session configuration
 
